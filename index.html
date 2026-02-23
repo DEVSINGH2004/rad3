@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAD WORLDWIDE</title>
+
+  <!-- Instrument Sans — weights 400 500 600 700 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Lenis smooth scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+
+<body>
+
+  <div class="scroll-container">
+
+    <section class="intro">
+
+      <div class="scene">
+        <div class="logo-center">
+          <div class="logo-wrapper">
+            <img src="chrome logo 1.png" alt="Logo" class="logo" />
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FLOATING OBJECTS inside intro ── -->
+      <!-- Group A → fly UP on scroll -->
+      <img src="assets/shirt.png" class="intro-float if-shirt" data-dir="up" alt="">
+      <img src="assets/gamepad.png" class="intro-float if-gamepad" data-dir="up" alt="">
+      <img src="assets/cap.png" class="intro-float if-cap" data-dir="up" alt="">
+
+      <!-- Group B → fly DOWN on scroll -->
+      <img src="assets/car.png" class="intro-float if-car" data-dir="down" alt="">
+      <img src="assets/music.png" class="intro-float if-music" data-dir="down" alt="">
+      <img src="assets/shoe.png" class="intro-float if-shoe" data-dir="down" alt="">
+
+      <div class="scroll-text">SCROLL DOWN</div>
+
+    </section>
+
+    <section class="hero-section">
+
+      <!-- NAVBAR -->
+      <header class="navbar">
+        <div class="nav-left-desktop">
+          <a href="#">HOME</a>
+          <a href="#">SERVICES</a>
+          <a href="#">ABOUT US</a>
+        </div>
+
+        <div class="nav-center">
+          <img src="assets/logo-rad.png" alt="RAD Logo">
+        </div>
+
+        <div class="nav-right-desktop">
+          <a href="#" class="contact-btn">NEWSLETTER</a>
+          <a href="#" class="contact-btn">CONTACT US</a>
+        </div>
+
+        <!-- Hamburger (visible only on mobile/tablet) -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <!-- Mobile fullscreen overlay menu -->
+        <nav class="nav-menu" id="navMenu">
+          <a href="#">HOME</a>
+          <a href="#">SERVICES</a>
+          <a href="#">ABOUT US</a>
+          <a href="#">CLIENTS</a>
+          <a href="#" class="contact-btn">CONTACT US</a>
+        </nav>
+      </header>
+
+      <!-- HERO CONTENT -->
+      <div class="hero-content">
+        <div class="tag-pill">Relevance, Access & Distribution</div>
+        <h1>Fandom is the new frontier<br>of brand growth.</h1>
+        <p>
+          Fandom is the new frontier of growth, and RAD Worldwide leads it by
+          connecting sports, entertainment, and creator IPs with fans through
+          meaningful products and collaborations.
+          We go beyond licensing to build cultural connections that turn attention
+          into loyalty and relevance into revenue.
+        </p>
+      </div>
+
+      <!-- FLOATING OBJECTS in hero (decorative, visible after animation) -->
+      <img src="assets/car.png" class="float car">
+      <img src="assets/car.png" class="float car2">
+      <img src="assets/gamepad.png" class="float gamepad">
+      <img src="assets/shirt.png" class="float shirt">
+      <img src="assets/shirt.png" class="float shirt2">
+      <img src="assets/cap.png" class="float cap">
+      <img src="assets/music.png" class="float music">
+      <img src="assets/music.png" class="float music2">
+      <img src="assets/shoe.png" class="float shoe">
+      <img src="assets/shoe.png" class="float shoe2">
+
+    </section>
+
+    <!-- ================= ABOUT + SERVICES ================= -->
+    <section class="about-services">
+      <div class="about-card">
+        <div class="about-text">
+          <h2>ABOUT US</h2>
+          <p>Fandom is the new frontier of growth, and RAD Worldwide leads it by connecting sports, entertainment, and
+            creator IPs with fans through meaningful products and collaborations. We go beyond licensing to build
+            cultural connections that turn attention into loyalty and relevance into revenue.</p>
+        </div>
+        <div class="about-image">
+          <img src="assets/aboutus-img.png" class="about-main-img" alt="About">
+          <img src="assets/Glow.png" class="about-glow" alt="">
+        </div>
+      </div>
+
+      <h2 class="services-title">SERVICES</h2>
+
+      <!-- PIN TARGET: cards stack here, scroll peels each one up -->
+      <div class="service-stack-scene">
+        <div class="service-stack-inner">
+
+          <div class="service-card premium-card" data-card="4">
+
+  <img src="/assets/Glow.png" class="premium-glow-left" alt="">
+  <img src="/assets/Glow.png" class="premium-glow-right" alt="">
+  <img src="/assets/Grid.png" class="premium-grid" alt="">
+  <img src="assets/cap.png" class="premium-car" alt="Cap">
+
+  <div class="service-content premium-content">
+    <span class="premium-number">04</span>
+    <h3>Fan Engagement<br>& Community</h3>
+    <p>We design fan-first experiences that go beyond content — activations, drops, and community programmes that turn passive audiences into active brand advocates and long-term revenue streams.</p>
+  </div>
+
+</div>
+
+
+<div class="service-card premium-card" data-card="3">
+
+  <img src="/assets/Glow.png" class="premium-glow-left" alt="">
+  <img src="/assets/Glow.png" class="premium-glow-right" alt="">
+  <img src="/assets/Grid.png" class="premium-grid" alt="">
+  <img src="assets/gamepad.png" class="premium-car" alt="Gamepad">
+
+  <div class="service-content premium-content">
+    <span class="premium-number">03</span>
+    <h3>Creator & Talent<br>IP Development</h3>
+    <p>We work with creators and talent to build sustainable IP ecosystems — from merchandise strategy and brand partnerships to long-term licensing structures that grow with their audience.</p>
+  </div>
+
+</div>
+
+
+<div class="service-card premium-card" data-card="2">
+
+  <img src="/assets/Glow.png" class="premium-glow-left" alt="">
+  <img src="/assets/Glow.png" class="premium-glow-right" alt="">
+  <img src="/assets/Grid.png" class="premium-grid" alt="">
+  <img src="assets/shirt.png" class="premium-car" alt="Shirt">
+
+  <div class="service-content premium-content">
+    <span class="premium-number">02</span>
+    <h3>Brand & IP<br>Partnerships</h3>
+    <p>We connect brands with the right sports, entertainment, and creator IPs to build co-branded products and campaigns that feel culturally authentic and drive measurable commercial results.</p>
+  </div>
+
+</div>
+
+          <div class="service-card premium-card" data-card="1">
+
+  <!-- Glow Backgrounds -->
+  <img src="/assets/Glow.png" class="premium-glow-left" alt="">
+  <img src="/assets/Glow.png" class="premium-glow-right" alt="">
+
+  <!-- Grid -->
+  <img src="/assets/Grid.png" class="premium-grid" alt="">
+
+  <!-- Car -->
+  <img src="assets/car.png" class="premium-car" alt="Car">
+
+  <div class="service-content premium-content">
+    <span class="premium-number">01</span>
+
+    <h3>
+      Licensing Strategy<br>
+      & Commercial Design
+    </h3>
+
+    <p>
+      We build licensing strategies that scale. From IP positioning and category planning to territory strategy and deal structures, we align creative ambition with revenue goals — creating clear, decision-ready roadmaps for growth.
+    </p>
+  </div>
+
+</div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WHO WE PARTNER WITH ================= -->
+    <section class="partners-section">
+      <h2 class="partners-title">WHO WE PARTNER WITH</h2>
+
+      <div class="partners-row row-2">
+        <div class="partner-card2">
+          <div class="card-inner">
+            <img src="assets/shirt.png" class="partner-main-img" alt="">
+            <img src="assets/Glow.png" class="partner-glow" alt="">
+          </div>
+          <span class="card-number">01</span>
+          <h3>Brands & Partners</h3>
+          <p>Companies aiming to collaborate with creators, athletes and IPs to deliver co-branded products, activations
+            and campaigns.</p>
+        </div>
+        <div class="partner-card1">
+          <div class="card-inner">
+            <img src="assets/shoe.png" class="partner-main-img" alt="">
+            <img src="assets/Glow.png" class="partner-glow" alt="">
+          </div>
+          <span class="card-number">02</span>
+          <h3>Sports & Entertainment Right Holders</h3>
+          <p>leagues, teams, studios, and independent sports media looking to localise content, launch fan engagement
+            initiatives and monetise IP</p>
+        </div>
+        
+
+      </div>
+
+      <div class="partners-row row-3">
+        <div class="partner-card3">
+          <div class="card-inner">
+            <img src="assets/gamepad.png" class="partner-main-img" alt="">
+            <img src="assets/Glow.png" class="partner-glow" alt="">
+          </div>
+          <span class="card-number">03</span>
+          <h3>Gaming Teams & Gamers</h3>
+          <p>Competitive and community driven gaming organisations, esports teams and individual players seeking
+            licensing and merchandising opportunities</p>
+        </div>
+
+
+        <div class="partner-card4">
+          <div class="card-inner">
+            <img src="assets/shirt.png" class="partner-main-img" alt="">
+            <img src="assets/Glow.png" class="partner-glow" alt="">
+          </div>
+          <span class="card-number">04</span>
+          <h3>Digital & Content IPs</h3>
+          <p>Growing digital first brands, podcasts and independent media ventures looking to expand reach merchandise
+            and fan engagement</p>
+        </div>
+        <div class="partner-card5">
+          <div class="card-inner">
+            <img src="assets/music.png" class="partner-main-img" alt="">
+            <img src="assets/Glow.png" class="partner-glow" alt="">
+          </div>
+          <span class="card-number">05</span>
+          <h3>Creators & Talent</h3>
+          <p>Independent artists, gamers, and content creators building long term IPs, merchandise lines, and
+            collaborations.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROJECTS / CLIENTS ================= -->
+    <section class="projects-section">
+      <h2 class="projects-title">PROJECTS/CLIENTS</h2>
+      <div class="logo-strip"></div>
+    </section>
+
+    <!-- ================= WHY RAD WORLDWIDE ================= -->
+    <section class="why-section">
+      <div class="why-card">
+        <div class="why-text">
+          <h2>WHY RAD WORLDWIDE</h2>
+          <p>Fandom is the new frontier of growth, and RAD Worldwide leads it by connecting sports, entertainment, and
+            creator IPs with fans through meaningful products and collaborations. We go beyond licensing to build
+            cultural connections that turn attention into loyalty and relevance into revenue.</p>
+        </div>
+        <div class="why-image">
+          <img src="assets/Glow.png" class="why-glow" alt="">
+          <img src="assets/whyimg.png" class="why-main-img" alt="">
+        </div>
+      </div>
+    </section>
+
+   <!-- ================= NEWSLETTER ================= -->
+<section class="newsletter-section">
+  <div class="newsletter-image-wrapper">
+    <img src="assets/newsletter.png" alt="Newsletter Section" class="newsletter-image">
+  </div>
+</section>
+
+    <!-- ================= CONTACT SECTION ================= -->
+    <section class="contact-section">
+      <div class="contact-card">
+        <div class="contact-left">
+          <h2>Contact Us</h2>
+          <p>Fill the form with your message to get in touch with the team RAD</p>
+          <button class="submit-btn">Submit</button>
+        </div>
+        <div class="contact-right">
+          <div class="form-group inline-field">
+            <label>Name:</label>
+            <input type="text">
+          </div>
+          <div class="form-group inline-field">
+            <label>Email:</label>
+            <input type="email">
+          </div>
+          <div class="form-group inline-field">
+            <label>Services:</label>
+            <select>
+              <option>select an option</option>
+            </select>
+          </div>
+          <div class="form-group message-field">
+            <label>Message:</label>
+            <textarea rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ================= RAD FOOTER ================= -->
+  <footer class="rad-footer">
+
+    <!-- Layer 1: giant RADWORLDWIDE arched text -->
+    <img src="assets/Vector.png" class="footer-vector" alt="RAD WORLDWIDE">
+
+    <!-- Layer 2: black dome ellipse -->
+    <img src="assets/Ellipse 47.png" class="footer-ellipse" alt="">
+
+    <!-- Layer 3: chrome globe logo centred on the dome -->
+    <div class="footer-logo">
+      <img src="assets/chrome logo 2.svg" alt="RAD Logo">
+    </div>
+
+    <!-- Layer 4: link columns -->
+    <div class="footer-links">
+
+      <div class="footer-col">
+        <a href="#">Who are we?</a>
+        <a href="#">Services</a>
+        <a href="#">Who we work with?</a>
+        <a href="#">Team RAD</a>
+        <a href="#">Projects/Clients</a>
+        <a href="#">Why work with us</a>
+        <span class="copy">©RADWORLDWIDE 2026</span>
+      </div>
+
+      <div class="footer-col">
+        <a href="#">Who are we?</a>
+        <a href="#">Services</a>
+        <a href="#">Who we work with?</a>
+        <a href="#">Team RAD</a>
+        <a href="#">Projects/Clients</a>
+        <a href="#">Why work with us</a>
+        <span class="copy">©RADWORLDWIDE 2026</span>
+      </div>
+
+      <div class="footer-col">
+        <a href="#">Who are we?</a>
+        <a href="#">Services</a>
+        <a href="#">Who we work with?</a>
+        <a href="#">Team RAD</a>
+        <a href="#">Projects/Clients</a>
+        <a href="#">Why work with us</a>
+        <span class="copy">©RADWORLDWIDE 2026</span>
+      </div>
+
+      <div class="footer-col footer-col-right">
+        <a href="#">T&amp;C</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Cookie Policy</a>
+        <a href="#">Accessibility</a>
+        <div class="footer-social">
+          <span class="social-label">Follow us on:</span>
+          <div class="social-icons">
+            <a href="#" class="social-icon si-fb" aria-label="Facebook">f</a>
+            <a href="#" class="social-icon si-ig" aria-label="Instagram">&#xe800;</a>
+            <a href="#" class="social-icon si-li" aria-label="LinkedIn">in</a>
+          </div>
+        </div>
+        <span class="footer-tagline">Let's build something RAD!</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
