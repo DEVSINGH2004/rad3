@@ -50,7 +50,7 @@ const floatsUp   = document.querySelectorAll(".intro-float[data-dir='up']");
 const floatsDown = document.querySelectorAll(".intro-float[data-dir='down']");
 const allFloats  = document.querySelectorAll(".intro-float");
 
-const heroNavbar = heroSection.querySelector(".navbar");
+const heroNavbar = document.querySelector(".navbar");
 const heroPill   = heroSection.querySelector(".tag-pill");
 const heroH1     = heroSection.querySelector("h1");
 const heroP      = heroSection.querySelector(".hero-content p");
@@ -62,10 +62,12 @@ const heroFloats = heroSection.querySelectorAll(".float");
 function setInitialState() {
   gsap.set(heroSection,  { opacity: 1, scale: 1, zIndex: 10 });
   /* Hero elements — fully visible, no entrance animation */
-  gsap.set([heroNavbar, heroPill, heroH1, heroP], { opacity: 1, y: 0 });
+  gsap.set([heroPill, heroH1, heroP], { opacity: 1, y: 0 });
   gsap.set(heroFloats,  { opacity: 1, y: 0, scale: 1 });
   gsap.set(allFloats,   { opacity: 1, y: 0, rotation: 0, scale: 1 });
   gsap.set(introSection, { opacity: 1, backgroundColor: "rgba(135,51,232,1)" });
+  /* Navbar starts hidden — fades in as intro fades out */
+  gsap.set(heroNavbar, { opacity: 0, pointerEvents: "none" });
 }
 setInitialState();
 
@@ -111,16 +113,26 @@ function createIntro() {
       /* Fade intro */
       const fade   = gsap.utils.clamp(0, 1, (p - 0.60) / 0.25);
       gsap.set(introSection, { opacity: 1 - fade });
+
+      /* Navbar fades in exactly as intro fades out */
+      gsap.set(heroNavbar, {
+        opacity      : fade,
+        pointerEvents: fade > 0.05 ? "auto" : "none",
+      });
     },
 
     onLeave: () => {
       gsap.set(introSection, { opacity: 0, backgroundColor: "#100318", visibility: "hidden" });
       gsap.set(heroSection,  { zIndex: -1 });
+      /* Ensure navbar is fully visible once intro is gone */
+      gsap.set(heroNavbar, { opacity: 1, pointerEvents: "auto" });
     },
 
     onEnterBack: () => {
       gsap.set(introSection, { visibility: "visible", backgroundColor: "rgba(135,51,232,1)" });
       gsap.set(heroSection,  { zIndex: 10 });
+      /* Hide navbar again when scrolling back into the intro */
+      gsap.set(heroNavbar, { opacity: 0, pointerEvents: "none" });
     },
   });
 }
@@ -413,43 +425,47 @@ initProjects();
 
 /* ──────────────────────────────────────────────
    9. WHY RAD WORLDWIDE SECTION
+   Pin the projects section so the why-section scrolls up
+   over it — exactly mirroring how about-services rises
+   over the fixed hero section.
    ────────────────────────────────────────────── */
+
+let whyST;
+
 function initWhy() {
-  const card    = document.querySelector(".why-card");
-  const textH   = document.querySelector(".why-text h2");
-  const textP   = document.querySelector(".why-text p");
-  const mainImg = document.querySelector(".why-main-img");
-  const glow    = document.querySelector(".why-glow");
+  if (whyST) { whyST.kill(); whyST = null; }
 
-  if (!card) return;
+  const projects   = document.querySelector(".projects-section");
+  const whySection = document.querySelector(".why-section");
+  const glow       = document.querySelector(".why-glow");
 
-  gsap.from(card, {
-    scrollTrigger: { trigger: card, start: "top 85%", toggleActions: "play none none reverse" },
-    y: 80, opacity: 0, duration: 0.9, ease: "power3.out",
+  if (!projects || !whySection) return;
+
+  /* Pin the projects section.
+     During this pin scroll distance, the why-section naturally
+     rises from below into view — no extra transform needed,
+     just like about-services naturally scrolls over the fixed hero. */
+  whyST = ScrollTrigger.create({
+    trigger     : projects,
+    start       : "top top",
+    end         : "+=100vh",
+    pin         : true,
+    anticipatePin: 1,
   });
 
-  gsap.from([textH, textP], {
-    scrollTrigger: { trigger: card, start: "top 80%", toggleActions: "play none none reverse" },
-    y: 40, opacity: 0, duration: 0.8, stagger: 0.15, ease: "power2.out", delay: 0.2,
-  });
-
-  if (mainImg) {
-    /* Parallax drift */
-    gsap.to(mainImg, {
-      scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: 1.4 },
-      y: -50, ease: "none",
-    });
-    /* Entrance spin */
-    gsap.from(mainImg, {
-      scrollTrigger: { trigger: card, start: "top 85%", toggleActions: "play none none reverse" },
-      rotation: -8, x: 60, opacity: 0, scale: 0.9, duration: 1, ease: "power3.out",
-    });
-  }
-
+  /* Continuous glow pulse */
   if (glow) {
-    gsap.to(glow, { opacity: 1.2, scale: 1.06, duration: 2.6, ease: "sine.inOut", repeat: -1, yoyo: true });
+    gsap.to(glow, {
+      opacity : 1.2,
+      scale   : 1.06,
+      duration: 2.6,
+      ease    : "sine.inOut",
+      repeat  : -1,
+      yoyo    : true,
+    });
   }
 }
+
 initWhy();
 
 /* ──────────────────────────────────────────────
@@ -604,24 +620,6 @@ function initNavbar() {
     },
   });
 
-  /* Hamburger */
-  const btn  = document.getElementById("hamburger");
-  const menu = document.getElementById("navMenu");
-  if (btn && menu) {
-    btn.addEventListener("click", () => {
-      const open = btn.classList.toggle("active");
-      gsap.to(menu, {
-        opacity : open ? 1 : 0,
-        y       : open ? 0 : -20,
-        duration: 0.35,
-        ease    : "power2.out",
-        onStart : () => { if (open) menu.style.display = "flex"; },
-        onComplete: () => { if (!open) menu.style.display = "none"; },
-        pointerEvents: open ? "all" : "none",
-      });
-      lenis[open ? "stop" : "start"]();
-    });
-  }
 }
 initNavbar();
 
@@ -663,6 +661,7 @@ function rebuild() {
   setInitialState();
   createIntro();
   createServices();
+  initWhy();
   ScrollTrigger.refresh(true);
 }
 
@@ -684,3 +683,36 @@ window.addEventListener("orientationchange", scheduleRebuild);
 window.addEventListener("load", () => {
   ScrollTrigger.refresh(true);
 });
+
+/* ================= MOBILE MENU TOGGLE ================= */
+
+(function () {
+  const hamburger = document.getElementById("hamburger");
+  const navMenu   = document.getElementById("navMenu");
+
+  if (!hamburger || !navMenu) return;
+
+  hamburger.addEventListener("click", function () {
+    const isOpen = hamburger.classList.toggle("active");
+    navMenu.classList.toggle("active", isOpen);
+
+    // lock / unlock Lenis smooth scroll
+    if (isOpen) {
+      lenis.stop();
+      document.body.style.overflow = "hidden";
+    } else {
+      lenis.start();
+      document.body.style.overflow = "";
+    }
+  });
+
+  // Close menu when any link inside it is clicked
+  navMenu.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      hamburger.classList.remove("active");
+      navMenu.classList.remove("active");
+      lenis.start();
+      document.body.style.overflow = "";
+    });
+  });
+})();

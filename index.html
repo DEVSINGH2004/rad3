@@ -22,6 +22,34 @@
 
 <body>
 
+  <!-- ── NAVBAR lives here — outside scroll-container so it's never trapped
+       inside hero-section's stacking context (will-change: transform) ── -->
+  <header class="navbar">
+    <div class="nav-left-desktop">
+      <a href="#">HOME</a>
+      <a href="#">SERVICES</a>
+      <a href="#">ABOUT US</a>
+    </div>
+    <div class="nav-center">
+      <img src="assets/logo-rad.png" alt="RAD Logo">
+    </div>
+    <div class="nav-right-desktop">
+      <a href="#" class="contact-btn">NEWSLETTER</a>
+      <a href="#" class="contact-btn">CONTACT US</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav-menu" id="navMenu">
+      <a href="#">HOME</a>
+      <a href="#">SERVICES</a>
+      <a href="#">ABOUT US</a>
+      <a href="#">CLIENTS</a>
+      <a href="#" class="contact-btn">CONTACT US</a>
+      <a href="#" class="contact-btn">NEWSLETTER</a>
+    </nav>
+  </header>
+
   <div class="scroll-container">
 
     <section class="intro">
@@ -50,38 +78,6 @@
     </section>
 
     <section class="hero-section">
-
-      <!-- NAVBAR -->
-      <header class="navbar">
-        <div class="nav-left-desktop">
-          <a href="#">HOME</a>
-          <a href="#">SERVICES</a>
-          <a href="#">ABOUT US</a>
-        </div>
-
-        <div class="nav-center">
-          <img src="assets/logo-rad.png" alt="RAD Logo">
-        </div>
-
-        <div class="nav-right-desktop">
-          <a href="#" class="contact-btn">NEWSLETTER</a>
-          <a href="#" class="contact-btn">CONTACT US</a>
-        </div>
-
-        <!-- Hamburger (visible only on mobile/tablet) -->
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-          <span></span><span></span><span></span>
-        </button>
-
-        <!-- Mobile fullscreen overlay menu -->
-        <nav class="nav-menu" id="navMenu">
-          <a href="#">HOME</a>
-          <a href="#">SERVICES</a>
-          <a href="#">ABOUT US</a>
-          <a href="#">CLIENTS</a>
-          <a href="#" class="contact-btn">CONTACT US</a>
-        </nav>
-      </header>
 
       <!-- HERO CONTENT -->
       <div class="hero-content">
