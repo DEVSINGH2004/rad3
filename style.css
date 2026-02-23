@@ -338,6 +338,49 @@ body {
 
 .about-image img { width: 11.875rem; }
 
+/* ================= ABOUT SECTION MOBILE FIX ================= */
+
+@media (max-width: 768px) {
+
+  .about-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    gap: 2rem;
+  }
+
+  /* Make about-text act like a column container */
+  .about-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ORDER CONTROL */
+  .about-text h2 {
+    order: 1;
+  }
+
+  .about-image {
+    order: 2;
+  }
+
+  .about-text p {
+    order: 3;
+    max-width: 100%;
+  }
+
+  /* Fix glow positioning for mobile */
+  .about-glow {
+    right: 50%;
+    transform: translate(50%, -50%) scale(3.5);
+  }
+
+  .about-main-img {
+    width: 9rem;
+  }
+}
+
 .services-title {
   text-align: center;
   font-size: clamp(1.875rem, 5vw, 3.25rem);
