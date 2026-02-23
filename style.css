@@ -438,6 +438,69 @@ body {
 
 .service-image img { width: 20rem; max-width: 100%; }
 
+/* ================= SERVICES MOBILE FINAL LAYOUT ================= */
+
+@media (max-width: 768px) {
+
+  .service-card {
+    flex-direction: column;
+    padding: 3rem 1.5rem;
+    align-items: stretch; /* Important */
+  }
+
+  .premium-content {
+    max-width: 100%;
+    order: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* NUMBER PILL — LEFT */
+  .premium-number {
+    align-self: flex-start;
+    margin-bottom: 1.5rem;
+  }
+
+  /* TITLE + DESCRIPTION — CENTER */
+  .premium-content h3,
+  .premium-content p {
+    text-align: center;
+  }
+
+  .premium-content h3 {
+    margin-bottom: 1rem;
+  }
+
+  /* OBJECT BELOW TEXT */
+  .premium-car {
+    position: relative;
+    order: 2;
+    top: auto;
+    right: auto;
+    transform: none;
+    width: 12rem;
+    margin: 2.5rem auto 0 auto; /* center only object */
+  }
+
+  /* GLOW BEHIND OBJECT */
+  .premium-glow-left {
+    left: 50%;
+    top: auto;
+    transform: translateX(-50%);
+    width: 28rem;
+    opacity: 0.6;
+  }
+
+  .premium-glow-right {
+    display: none; /* prevent messy double glow */
+  }
+
+  .premium-card {
+    border-width: 1.2rem;
+  }
+
+}
+
 /* ================= PARTNERS SECTION ================= */
 
 .partners-section {
