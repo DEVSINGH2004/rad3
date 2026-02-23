@@ -592,6 +592,8 @@ body {
 
 /* ================= NEWSLETTER ================= */
 
+/* ================= NEWSLETTER ================= */
+
 .newsletter-section {
   background: #120018;
   padding: 7.5rem 5rem;
@@ -599,9 +601,112 @@ body {
   justify-content: center;
 }
 
-.newsletter-image-wrapper { max-width: 87.5rem; width: 100%; }
+.newsletter-container {
+  width: 100%;
+  max-width: 87.5rem;
+  border-radius: 2rem;
+  background: linear-gradient(135deg, #f2a33b, #d97706);
+  padding: 4.5rem 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
 
-.newsletter-image { width: 100%; height: auto; display: block; border-radius: 1.875rem; }
+/* LEFT CONTENT */
+
+.newsletter-content {
+  max-width: 50rem;
+  z-index: 2;
+
+}
+
+.newsletter2-title {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+}
+
+.newsletter-desc {
+  font-size: clamp(0.9rem, 1.2vw, 1.2rem);
+  line-height: 1.6;
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 2.5rem;
+}
+
+.newsletter-btn-main {
+  display: inline-block;
+  padding: 1.25rem 3rem;
+  border-radius: 3rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(0.5rem);
+  transition: all 0.3s ease;
+}
+
+.newsletter-btn-main:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* RIGHT RADAR */
+
+.newsletter-graphic {
+  position: absolute;
+  right: -16rem;  /* pushes half outside */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32rem;
+  height: 32rem;
+}
+
+.newsletter-radar {
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 1;
+}
+
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1200px) {
+  .newsletter-container {
+    padding: 3rem;
+  }
+
+  .newsletter-graphic {
+    right: -20rem;
+    width: 26rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .newsletter-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 3rem 2rem;
+  }
+
+  .newsletter-content {
+    max-width: 100%;
+  }
+
+  .newsletter-graphic {
+    position: relative;
+    right: 0;
+    top: auto;
+    transform: none;
+    margin-top: 3rem;
+    width: 20rem;
+  }
+}
 
 /* ================= CONTACT SECTION ================= */
 
