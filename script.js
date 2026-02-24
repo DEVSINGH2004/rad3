@@ -49,6 +49,7 @@ const heroH1         = heroSection.querySelector("h1");
 const heroP          = heroSection.querySelector(".hero-content p");
 const heroFloats     = heroSection.querySelectorAll(".float");
 const servicesTitle  = document.querySelector(".services-title");
+const logoImg        = document.querySelector(".logo"); /* the <img> inside logo-wrapper */
 
 /* ──────────────────────────────────────────────
    FIX 3 HELPER — forcibly lock services title
@@ -60,32 +61,99 @@ function lockServicesTitle() {
 }
 
 /* ──────────────────────────────────────────────
+   A-GAP PORTAL — MEASUREMENT + CLIP HELPER
+   ──────────────────────────────────────────────
+   We read the ACTUAL rendered logo rect from the DOM
+   (after forcing scale=1) so the numbers are correct
+   at every breakpoint — phones, tablets, widescreens,
+   landscape — without any hardcoded pixel guessing.
+
+   CSS transform-origin: 50% 35%  →  pivot sits 15%
+   above the logo's vertical centre in the viewport.
+   ────────────────────────────────────────────── */
+let _pvX = 0, _pvY = 0, _lW = 0, _lH = 0;   /* cached per-layout */
+
+function measureLogo() {
+  /* logoWrapper MUST be at scale:1 before calling this.
+     getBoundingClientRect forces a reflow, so the fresh
+     GSAP transform is already applied when we read it.  */
+  const r = logoWrapper.getBoundingClientRect();
+  _lW  = r.width;
+  _lH  = r.height;
+  _pvX = window.innerWidth  / 2;
+  /* transform-origin: 50% 35%
+     logo top in viewport = vh/2 - _lH/2
+     pivot Y = logoTop + _lH * 0.35
+             = vh/2 - _lH/2 + _lH * 0.35
+             = vh/2 - _lH * 0.15            */
+  _pvY = window.innerHeight / 2 - _lH * 0.15;
+}
+
+function aGapClip(s) {
+  /* Upper enclosed triangle of the letter A.
+     All offsets are relative to the actual logo
+     dimensions so the shape stays correct across
+     every screen size and orientation.
+     apexRY  : apex (top of gap) relative to pivot
+     baseRY  : base of gap (crossbar level) relative to pivot
+     baseRX  : half-width of triangle base relative to pivot */
+  const apexRY = -0.22 * _lH;
+  const baseRY =  0.13 * _lH;
+  const baseRX =  0.21 * _lW;
+
+  const ax = _pvX,              ay = _pvY + apexRY * s;
+  const rx = _pvX + baseRX * s, ry = _pvY + baseRY * s;
+  const lx = _pvX - baseRX * s;
+
+  return (
+    `polygon(${ax.toFixed(1)}px ${ay.toFixed(1)}px, ` +
+    `${rx.toFixed(1)}px ${ry.toFixed(1)}px, ` +
+    `${lx.toFixed(1)}px ${ry.toFixed(1)}px)`
+  );
+}
+
+/* ──────────────────────────────────────────────
    2. INITIAL STATE
    ──────────────────────────────────────────────
-   FIX 2: Navbar starts fully HIDDEN. It only appears
-   once the intro overlay fades out (progress ≥ 0.97).
+   Hero lives above the intro (z:25 > intro z:20).
+   It is always clipped to the A-gap triangle and
+   invisible (opacity 0) until p ≥ 0.93.
+   The purple intro bg acts as the "wall" — the
+   hero bleeds through only the triangular portal.
+
+   IMPORTANT: logoWrapper is reset to scale:1 first
+   so measureLogo() always reads the natural size —
+   this is critical on resize (logo may be mid-scale).
    ────────────────────────────────────────────── */
 function setInitialState() {
-  gsap.set(heroSection,  { opacity: 1, scale: 1, zIndex: 10 });
+  /* 1. Reset logo to natural scale so measurement is accurate */
+  gsap.set(logoWrapper, { scale: 1, force3D: true });
+  /* 2. Read actual rendered logo dimensions — works on every breakpoint */
+  measureLogo();
+
+  /* Hero: above intro, invisible, clipped to tiny A gap at scale 1 */
+  gsap.set(heroSection, {
+    opacity  : 0,
+    zIndex   : 25,
+    clipPath : aGapClip(1),
+  });
   gsap.set([heroPill, heroH1, heroP], { opacity: 1, y: 0 });
   gsap.set(heroFloats,  { opacity: 1, y: 0, scale: 1 });
   gsap.set(allFloats,   { opacity: 1, y: 0, rotation: 0, scale: 1 });
   gsap.set(introSection, { opacity: 1, backgroundColor: "rgba(135,51,232,1)" });
-
-  /* FIX 2 — start hidden */
-  gsap.set(heroNavbar, { opacity: 0, pointerEvents: "none" });
-
-  /* FIX 3 — lock title on every reset */
+  gsap.set(heroNavbar,   { opacity: 0, pointerEvents: "none" });
   lockServicesTitle();
 }
 setInitialState();
 
 /* ──────────────────────────────────────────────
-   3. INTRO SCROLL
+   3. INTRO SCROLL — PORTAL EFFECT
    ──────────────────────────────────────────────
-   FIX 1: transform-origin "50% 54%" targets the open
-   triangular gap of the A (below its crossbar).
-   FIX 2: navbar fades in as the intro overlay fades out.
+   The A logo scales up (1× → 18×) around its upper gap
+   (transform-origin: 50% 32%). The hero section sits ABOVE
+   the intro (z:25 > z:20) but is clipped to the exact
+   triangular gap shape at every frame — so the hero is only
+   ever visible through the A's portal window.
    ────────────────────────────────────────────── */
 let introST;
 let navbarShown = false;
@@ -108,11 +176,8 @@ function createIntro() {
     onUpdate: self => {
       const p = self.progress;
 
-      gsap.set(logoWrapper, {
-        scale  : 1 + p * 17,
-        opacity: 1,
-        force3D: true,
-      });
+      /* Logo scale — same as before */
+      gsap.set(logoWrapper, { scale: 1 + p * 17, opacity: 1, force3D: true });
 
       floatsUp.forEach((el, i) => {
         const fp = gsap.utils.clamp(0, 1, (p - 0.03 - i * 0.02) / 0.22);
@@ -123,27 +188,42 @@ function createIntro() {
         gsap.set(el, { y: fp * 150 + "vh", opacity: 1 - fp });
       });
 
-      const fade = gsap.utils.clamp(0, 1, (p - 0.97) / 0.03);
+      /* ── PORTAL EFFECT ──────────────────────────────────────────
+         The clip-path tracks the A gap at every frame — always in
+         sync with the scaling logo.
+         Hero opacity: 0 until p ≥ 0.93 (gap ≈ 95% of viewport),
+         then fades in gradually — visible ONLY through the triangle.
+         Intro purple wall fades out in parallel.
+         ─────────────────────────────────────────────────────────── */
+      const s    = 1 + p * 17;
+      const fade = gsap.utils.clamp(0, 1, (p - 0.93) / 0.07);
+
+      heroSection.style.clipPath = aGapClip(s);     /* direct DOM — no GSAP batching delay */
+      gsap.set(heroSection,  { opacity: fade });
       gsap.set(introSection, { opacity: 1 - fade });
 
-      /* FIX 2 — show navbar only when intro overlay is >50% faded */
-      if (fade > 0.5 && !navbarShown) {
+      /* Navbar appears once hero is clearly visible */
+      if (fade > 0.6 && !navbarShown) {
         navbarShown = true;
         gsap.to(heroNavbar, { opacity: 1, duration: 0.35, ease: "power2.out", pointerEvents: "auto" });
-      } else if (fade <= 0.5 && navbarShown) {
+      } else if (fade <= 0.6 && navbarShown) {
         navbarShown = false;
         gsap.to(heroNavbar, { opacity: 0, duration: 0.2, ease: "power2.in", pointerEvents: "none" });
       }
     },
 
     onLeave: () => {
+      /* Animation complete — remove clip, full hero visible, intro gone */
       gsap.set(introSection, { opacity: 0, backgroundColor: "#100318", visibility: "hidden" });
-      gsap.set(heroSection,  { zIndex: -1 });
+      gsap.set(heroSection,  { opacity: 1, zIndex: -1, clipPath: "none" });
     },
 
     onEnterBack: () => {
+      /* Scrolled back to top — restore portal state with fresh measurements */
+      gsap.set(logoWrapper, { scale: 1, force3D: true });
+      measureLogo();
       gsap.set(introSection, { visibility: "visible", backgroundColor: "rgba(135,51,232,1)" });
-      gsap.set(heroSection,  { zIndex: 10 });
+      gsap.set(heroSection,  { opacity: 0, zIndex: 25, clipPath: aGapClip(1) });
     },
   });
 }
@@ -492,6 +572,12 @@ function scheduleRebuild() {
 window.addEventListener("resize",            scheduleRebuild);
 window.addEventListener("orientationchange", scheduleRebuild);
 window.addEventListener("load", () => {
+  /* Re-measure now that all images (including the logo) are fully loaded
+     and the browser has their final rendered dimensions. Then update the
+     clip-path so it's based on accurate logo size, not the pre-load guess. */
+  gsap.set(logoWrapper, { scale: 1, force3D: true });
+  measureLogo();
+  gsap.set(heroSection, { clipPath: aGapClip(1) });
   ScrollTrigger.refresh(true);
   lockServicesTitle();
 });

@@ -59,7 +59,7 @@ body {
 
 .logo-wrapper {
   transform-style: preserve-3d;
-  transform-origin: 50% 54%;
+  transform-origin: 50% 35%;
 }
 
 .logo {
@@ -104,16 +104,15 @@ body {
 .hero-section {
   position: fixed;
   inset: 0;
-  z-index: 10;
+  z-index: 25;          /* above intro (z:20) — clip-path creates the portal window */
   min-height: 100vh;
   background: url("assets/bg.png") center / cover no-repeat;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 1;
-  transform: scale(1);
-  will-change: opacity, transform;
+  opacity: 0;           /* GSAP drives this — starts hidden */
+  will-change: clip-path, opacity;
   transition: none;
 }
 
@@ -124,7 +123,7 @@ body {
   left: 0;
   right: 0;
   width: 100%;
-  padding: 1.125rem 3.75rem;
+  padding: 1.125rem 1.75rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -142,13 +141,13 @@ body {
 .nav-right-desktop {
   display: flex;
   align-items: center;
-  gap: 2.5rem;
+  gap: 5.5rem;
   flex: 1;
   min-width: 0;
 }
 
-.nav-left-desktop  { justify-content: flex-end;  padding-right: 2.5rem; }
-.nav-right-desktop { justify-content: flex-start; padding-left:  2.5rem; }
+.nav-left-desktop  { justify-content: flex-end;  padding-right: 15rem; }
+.nav-right-desktop { justify-content: flex-start; padding-left:  15rem; }
 
 .nav-center {
   display: flex;
@@ -172,8 +171,8 @@ body {
 
 .contact-btn {
   background: #470074;
-  padding: 0.625rem 1.5rem;
-  border-radius: 0.625rem;
+  padding: 0.55rem 1.6rem;
+  border-radius: 0.6rem;
   font-weight: 500;
   transition: background 0.25s ease;
 }
@@ -800,7 +799,7 @@ body {
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marqueeScroll 28s linear infinite;
+  animation: marqueeScroll 10s linear infinite;
   will-change: transform;
   width: 100%;
 }
